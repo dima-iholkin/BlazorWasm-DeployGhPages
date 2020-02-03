@@ -5,9 +5,9 @@ $InformationPreference = "Continue";
 $BlazorWasmProjectName = "DeployGhPages.Client"; #project name from the solution ().sln file).
 # It's the folder's name in the $tempFolderName folder.
 
-$GitHubProjectName = "DeployGhPages"; # for the base route in index.html.
+$GitHubProjectName = "BlazorWasm-DeployGhPages"; # for the base route in index.html.
 
-$GitHubRepoUrl = "https://github.com/dima-iholkin/DeployGhPages.git";
+$GitHubRepoUrl = "https://github.com/dima-iholkin/BlazorWasm-DeployGhPages.git";
 
 
 
