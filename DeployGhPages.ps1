@@ -162,14 +162,17 @@ Add-Content -Value @'
 Write-Information "";
 Write-Information "INFO: Created the 404.html file.";
 
-
-
 Set-Location $repoFolderRelativePath;
 
 git add .
 git commit -m "Deploy to GitHub Pages."
 git push
 # git push --set-upstream origin gh-pages
+
+# Add-Content -Path "404.html" -Value " "
+# git add .
+# git commit -m "A quick fix."
+# git push
 
 Set-Location $rootAbsolutePath;
 Remove-Item -Path $rootAbsolutePath"\"$tempFolderName -Recurse -Force;
