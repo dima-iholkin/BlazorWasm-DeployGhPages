@@ -41,7 +41,7 @@
     {
       "label": "dev_deploy to GitHub Pages",
       "type": "shell",
-      "command": ". .\\script_Deploy-BlazorGhPages.ps1; Deploy-BlazorGhPages -ProjectPath 'DeployGhPages.Client' -GhPagesRoute 'BlazorWasm-DeployGhPages' -Verbose",
+      "command": ". .\\script_Deploy-BlazorGhPages.ps1; Deploy-BlazorGhPages -ProjectPath 'DeployGhPages.Client' -GhPagesRoute 'Deploy-BlazorGhPages' -Verbose",
     }
   ]
 }
