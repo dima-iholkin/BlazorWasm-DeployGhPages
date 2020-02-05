@@ -1,13 +1,16 @@
-# $ErrorActionPreference = "Stop";
-# $InformationPreference = "Continue";
-
-
 function Deploy-BlazorGhPages {
   [CmdletBinding()]
   param(
     [Parameter(Mandatory = $true)][string]$ProjectPath,
-    [Parameter(Mandatory = $true)][string]$GhPagesRoute
+    [Parameter(Mandatory = $true)][string]$GhPagesRoute,
+    [string]$Branch = "gh-pages",
+    [Switch]$Initial,
+    [Switch]$GC
   )
+
+  if ($Initial -and $GC) {
+    throw "Supplied -Initial and -GC: Can't be an Initial deployment and a Garbage Collection (GC) deployment at the same time."
+  }
 
   $rootAbsolutePath = (Get-Location).ToString();
 
@@ -49,15 +52,27 @@ function Deploy-BlazorGhPages {
 
   Set-Location $repoFolderRelativePath;
 
-  git init
-  git remote add origin $GitHubRepoUrl
-  git checkout -b master
-  git pull origin gh-pages
-  # git checkout -b gh-pages
-  git checkout gh-pages
-  # git push origin --delete gh-pages
-
-  Remove-Item -path * -exclude .git -recurse;
+  if ((-Not $Initial) -and (-Not $GC)) {
+    git init
+    git remote add origin $GitHubRepoUrl
+    git checkout -b master
+    git pull origin $Branch
+    # git checkout -b $Branch
+    git checkout $Branch
+    # git push origin --delete $Branch
+    Remove-Item -path * -exclude .git -recurse;
+  }
+  elseif ($Initial -and (-Not $GC)) {
+    git init
+    git remote add origin $GitHubRepoUrl
+    git checkout -b $Branch
+  }
+  elseif ($GC -and (-Not $Initial)) {
+    git init
+    git remote add origin $GitHubRepoUrl
+    git checkout -b $Branch
+    git push origin --delete $Branch
+  }
 
   Set-Location $rootAbsolutePath;
 
@@ -168,10 +183,21 @@ function Deploy-BlazorGhPages {
 
   Set-Location $repoFolderRelativePath;
 
-  git add .
-  git commit -m "Deploy to GitHub Pages."
-  git push
-  # git push --set-upstream origin gh-pages
+  if ((-Not $Initial) -and (-Not $GC)) {
+    git add .
+    git commit -m "Deploy to GitHub Pages."
+    git push
+  }
+  elseif ($Initial -and (-Not $GC)) {
+    git add .
+    git commit -m "Initial deploy to GitHub Pages."
+    git push --set-upstream origin $Branch
+  }
+  elseif ($GC -and (-Not $Initial)) {
+    git add .
+    git commit -m "GC and deploy to GitHub Pages."
+    git push --set-upstream origin $Branch
+  }
 
   # Add-Content -Path "404.html" -Value " "
   # git add .
