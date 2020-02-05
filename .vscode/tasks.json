@@ -39,9 +39,24 @@
   },
   "tasks": [
     {
-      "label": "dev_deploy to GitHub Pages",
+      "label": "local: deploy to GitHub Pages",
       "type": "shell",
-      "command": ". .\\script_Deploy-BlazorGhPages.ps1; Deploy-BlazorGhPages -ProjectPath 'DeployGhPages.Client' -GhPagesRoute 'Deploy-BlazorGhPages' -Verbose",
-    }
+      "command": ". .\\script_Deploy-BlazorGhPages.ps1; Deploy-BlazorGhPages -ProjectPath DeployGhPages.Client -GhPagesRoute Deploy-BlazorGhPages -Verbose",
+    },
+    {
+      "label": "local: deploy to GitHub Pages -Initial",
+      "type": "shell",
+      "command": ". .\\script_Deploy-BlazorGhPages.ps1; Deploy-BlazorGhPages -ProjectPath DeployGhPages.Client -GhPagesRoute Deploy-BlazorGhPages -Initial -Verbose",
+    },
+    {
+      "label": "local: deploy to GitHub Pages -GC",
+      "type": "shell",
+      "command": ". .\\script_Deploy-BlazorGhPages.ps1; Deploy-BlazorGhPages -ProjectPath DeployGhPages.Client -GhPagesRoute Deploy-BlazorGhPages -GC -Verbose",
+    },
+    {
+      "label": "local: deploy to GitHub Pages -Initial -GC",
+      "type": "shell",
+      "command": ". .\\script_Deploy-BlazorGhPages.ps1; Deploy-BlazorGhPages -ProjectPath DeployGhPages.Client -GhPagesRoute Deploy-BlazorGhPages -Initial -GC -Verbose",
+    },
   ]
 }
